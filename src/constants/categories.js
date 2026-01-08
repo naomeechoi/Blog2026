@@ -1,6 +1,7 @@
 export const CATEGORY_COLORS = {
-  Rendering: "#4f46e5",       // indigo
-  "Machine Learning": "#16a34a", // green
-  Algorithm: "#9333ea",       // purple
-  Game: "#ea580c",            // orange
+  Graphics: "#4f46e5",          // Indigo
+  Visualization: "#9333ea",     // Purple
+  Game: "#ea580c",               // Orange
+  "Machine Learning": "#16a34a", // Green
+  "Web / Documentation": "#f59e0b", // Amber
 };
