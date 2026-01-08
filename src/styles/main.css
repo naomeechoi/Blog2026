@@ -1,0 +1,26 @@
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 180px);
+  gap: 20px;
+}
+
+.button-grid button {
+  padding: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #222;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.button-grid button:hover {
+  background: #222;
+  color: white;
+}
