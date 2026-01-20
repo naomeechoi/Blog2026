@@ -1,7 +1,9 @@
 export const CATEGORY_COLORS = {
-  Graphics: "#4f46e5",          // Indigo
-  Visualization: "#9333ea",     // Purple
-  Game: "#ea580c",               // Orange
-  "Machine Learning": "#16a34a", // Green
-  "Web / Documentation": "#f59e0b", // Amber
+  Graphics: "#f6b8c7",          // Pastel Pink (Warm)
+  Game: "#ffcc9a",  
+  Visualization: "#ffe0a8",            // Pastel Orange (Warm)
+  WebDocumentation: "#c9a7ff",             // Pastel Lavender (Cool)
+  Study: "#a7b7ff",     // Pastel Indigo (Cool)
+  MachineLearning: "#a7e6a2", // Pastel Mint (Cool)
+  TODO: "#8fe6ff"               // Pastel Sky Blue (Cool)
 };

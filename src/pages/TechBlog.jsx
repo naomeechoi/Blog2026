@@ -4,7 +4,7 @@ import BlogLayout from "../components/BlogLayout";
 import { CATEGORY_COLORS } from "../constants/categories";
 
 // tech 폴더 안의 md 파일 전부 불러오기
-const postFiles = import.meta.glob("../posts/tech/*.md", {
+const postFiles = import.meta.glob("../posts/tech/*/*.md", {
   as: "raw",
 });
 
@@ -53,6 +53,18 @@ export default function TechBlog() {
 
     loadPosts();
   }, []);
+
+  // ✅ selectedCategory 변경 시 자동으로 최신 글 선택
+  useEffect(() => {
+    if (posts.length === 0) return;
+
+    const filtered =
+      selectedCategory === "All"
+        ? posts
+        : posts.filter(post => post.category === selectedCategory);
+
+    setCurrent(filtered[0]);
+  }, [selectedCategory, posts]);
 
   // 선택된 카테고리에 따라 글 필터링
   const filteredPosts =
