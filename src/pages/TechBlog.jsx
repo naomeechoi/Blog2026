@@ -4,7 +4,7 @@ import BlogLayout from "../components/BlogLayout";
 import { CATEGORY_COLORS } from "../constants/categories";
 
 // tech 폴더 안의 md 파일 전부 불러오기
-const postFiles = import.meta.glob("../posts/tech/*/*/*.md", {
+const postFiles = import.meta.glob("../posts/tech/*/*/*/*.md", {
   as: "raw",
 });
 
