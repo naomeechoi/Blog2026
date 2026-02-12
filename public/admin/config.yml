@@ -1,0 +1,22 @@
+backend:
+  name: github
+  repo: https://github.com/naomeechoi/Blog2026   # 여기에 GitHub 레포 지정
+  branch: main
+
+media_folder: "public/Img"
+public_folder: "/Img"
+
+collections:
+  - name: "tech_posts"
+    label: "Tech Blog"
+    folder: "posts/tech"   # 기존 Markdown 경로
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"  # 자동 slug 생성
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Publish Date"
+        name: "date"
+        widget: "datetime"
+        default: "now"       # 웹에서 열면 현재 시각 자동 입력
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
