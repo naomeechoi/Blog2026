@@ -1,8 +1,9 @@
 backend:
   name: github
-  repo: https://github.com/naomeechoi/Blog2026   # 여기에 GitHub 레포 지정
+  repo: naomeechoi/Blog2026
   branch: main
-  auth_scope: redirect
+  auth_scope: repo
+  auth_mode: redirect
 
 media_folder: "public/Img"
 public_folder: "/Img"
