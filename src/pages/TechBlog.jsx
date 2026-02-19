@@ -16,7 +16,7 @@ export default function TechBlog() {
   useEffect(() => {
     const loadPosts = async () => {
       const loaded = await Promise.all(
-        Object.values(postFiles).map(async resolver => {
+        Object.values(postFiles).map(async (resolver) => {
           const raw = await resolver();
 
           // front matter 분리
@@ -29,7 +29,7 @@ export default function TechBlog() {
             frontMatter
               .trim()
               .split("\n")
-              .map(line => {
+              .map((line) => {
                 const [key, ...rest] = line.split(":");
                 return [key.trim(), rest.join(":").trim()];
               })
@@ -48,32 +48,36 @@ export default function TechBlog() {
         .sort((a, b) => new Date(b.date) - new Date(a.date));
 
       setPosts(sorted);
-      setCurrent(sorted[0]);
+      setCurrent(sorted.length > 0 ? sorted[0] : null);
     };
 
     loadPosts();
   }, []);
 
-  // ✅ selectedCategory 변경 시 자동으로 최신 글 선택
+  // selectedCategory 변경 시 자동으로 최신 글 선택
   useEffect(() => {
     if (posts.length === 0) return;
 
     const filtered =
       selectedCategory === "All"
         ? posts
-        : posts.filter(post => post.category === selectedCategory);
+        : posts.filter((post) => post.category === selectedCategory);
 
-    setCurrent(filtered[0]);
+    if (filtered.length > 0) {
+      setCurrent(filtered[0]); // 이미 최신순 정렬 상태
+    } else {
+      setCurrent(null);
+    }
   }, [selectedCategory, posts]);
 
   // 선택된 카테고리에 따라 글 필터링
   const filteredPosts =
     selectedCategory === "All"
       ? posts
-      : posts.filter(post => post.category === selectedCategory);
+      : posts.filter((post) => post.category === selectedCategory);
 
   // 작성시간 화면 표시용 함수
-  const formatDate = dateStr => {
+  const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -100,7 +104,11 @@ export default function TechBlog() {
             }}
           >
             <button
-              onClick={() => setSelectedCategory("All")}
+              onClick={() => {
+                if (selectedCategory !== "All") {
+                  setSelectedCategory("All");
+                }
+              }}
               style={{
                 padding: "4px 12px",
                 borderRadius: "999px",
@@ -114,16 +122,22 @@ export default function TechBlog() {
               All
             </button>
 
-            {Object.keys(CATEGORY_COLORS).map(cat => (
+            {Object.keys(CATEGORY_COLORS).map((cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => {
+                  if (selectedCategory !== cat) {
+                    setSelectedCategory(cat);
+                  }
+                }}
                 style={{
                   padding: "4px 12px",
                   borderRadius: "999px",
                   border: "none",
                   background:
-                    selectedCategory === cat ? CATEGORY_COLORS[cat] : "#eee",
+                    selectedCategory === cat
+                      ? CATEGORY_COLORS[cat]
+                      : "#eee",
                   color: selectedCategory === cat ? "white" : "black",
                   cursor: "pointer",
                   outline: "none",
@@ -135,11 +149,14 @@ export default function TechBlog() {
           </div>
 
           {/* 글 목록 */}
-          {filteredPosts.map(post => {
-            const isSelected = current?.title === post.title;
+          {filteredPosts.map((post) => {
+            const isSelected =
+              current?.title === post.title &&
+              current?.date === post.date;
+
             return (
               <div
-                key={post.title}
+                key={`${post.title}-${post.date}`}
                 onClick={() => setCurrent(post)}
                 style={{
                   cursor: "pointer",
@@ -147,10 +164,10 @@ export default function TechBlog() {
                   padding: "12px",
                   borderRadius: "8px",
                   background: isSelected
-                    ? CATEGORY_COLORS[post.category] || "#eee" // 선택된 글만 카테고리 색상
-                    : "transparent", // 나머지는 투명
-                  color: isSelected ? "white" : "black", // 선택 글은 흰색 글씨
-                  border: isSelected ? "none" : "1px solid #ccc", // 선택 안 된 글 구분용
+                    ? CATEGORY_COLORS[post.category] || "#eee"
+                    : "transparent",
+                  color: isSelected ? "white" : "black",
+                  border: isSelected ? "none" : "1px solid #ccc",
                 }}
               >
                 <strong style={{ display: "block", marginBottom: "6px" }}>
@@ -187,7 +204,8 @@ export default function TechBlog() {
                 fontSize: "12px",
                 borderRadius: "999px",
                 color: "white",
-                background: CATEGORY_COLORS[current.category] || "#6b7280",
+                background:
+                  CATEGORY_COLORS[current.category] || "#6b7280",
               }}
             >
               {current.category}
